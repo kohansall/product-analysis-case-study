@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#081c24">
+  <title>تحلیل محصول و رفتار کاربر | محمدرضا کهنسال</title>
+  <style>
+    :root{
+      --ink:#081c24; --ink2:#12343b; --paper:#f4f0e8; --card:#fffdf8;
+      --mint:#b7ff6a; --coral:#ff6b57; --cyan:#4fe1cf; --violet:#a991ff;
+      --muted:#627279; --line:rgba(8,28,36,.14); --shadow:0 18px 60px rgba(8,28,36,.13);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Tahoma,"Segoe UI",Arial,sans-serif;line-height:1.9;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:radial-gradient(rgba(8,28,36,.28) .55px,transparent .55px);background-size:7px 7px;z-index:-1}
+    a{color:inherit;text-decoration:none}
+    button,input{font:inherit}
+    .progress{position:fixed;top:0;right:0;height:5px;background:linear-gradient(90deg,var(--coral),var(--mint),var(--cyan));width:0;z-index:99;box-shadow:0 0 22px var(--mint)}
+    .shell{max-width:1240px;margin:auto;padding:24px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:10px 0 22px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+    .linkedin-mark{width:44px;height:44px;border-radius:13px;background:#0a66c2;color:white;display:grid;place-items:center;box-shadow:6px 6px 0 var(--ink);transition:.25s}
+    .linkedin-mark:hover{transform:translateY(-3px);box-shadow:8px 9px 0 var(--coral)}
+    .linkedin-mark svg{width:23px;height:23px;fill:currentColor}
+    .status{font-size:.82rem;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.55)}
+    .hero{position:relative;min-height:78vh;background:var(--ink);color:white;border-radius:38px;padding:clamp(34px,7vw,88px);display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;overflow:hidden;box-shadow:var(--shadow)}
+    .hero:before{content:"";position:absolute;width:480px;height:480px;border:70px solid rgba(255,255,255,.07);border-radius:50%;left:-260px;top:-210px;opacity:1}
+    .hero:after{content:"";position:absolute;width:260px;height:260px;background:var(--coral);clip-path:polygon(50% 0,100% 100%,0 100%);left:23%;bottom:-190px;transform:rotate(19deg)}
+    .hero-copy,.hero-panel{position:relative;z-index:2}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border:1px solid rgba(255,255,255,.23);border-radius:999px;color:var(--mint);font-size:.82rem;font-weight:800;letter-spacing:.04em}
+    h1{font-size:clamp(2.5rem,6vw,5.8rem);line-height:1.05;margin:22px 0 18px;letter-spacing:-.055em}
+    h1 span{color:var(--mint);display:block}
+    .lead{font-size:clamp(1rem,1.6vw,1.28rem);color:#d8e5e3;max-width:760px}
+    .author{margin-top:28px;display:flex;align-items:center;gap:14px}
+    .avatar{width:54px;height:54px;background:var(--paper);color:var(--ink);border-radius:50% 50% 14% 50%;display:grid;place-items:center;font-weight:900}
+    .hero-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:25px;border-radius:28px;backdrop-filter:blur(14px)}
+    .score-ring{width:212px;aspect-ratio:1;border-radius:50%;margin:auto;background:conic-gradient(var(--coral) 0 34%,var(--cyan) 34% 67%,var(--violet) 67% 100%);display:grid;place-items:center;position:relative;box-shadow:0 0 44px rgba(79,225,207,.18)}
+    .score-ring:after{content:"";position:absolute;inset:13px;border-radius:50%;background:var(--ink)}
+    .score-ring strong{z-index:1;font-size:1.55rem;color:white;line-height:1.35;text-align:center;max-width:120px}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:24px}
+    .stat{text-align:center;background:rgba(255,255,255,.07);padding:12px 4px;border-radius:16px}
+    .stat b{display:block;color:var(--mint);font-size:1.4rem}.stat small{color:#b9cbc9}
+    .dock{position:sticky;top:16px;z-index:40;margin:-24px auto 56px;max-width:820px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:7px;background:rgba(255,253,248,.88);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(16px);box-shadow:0 12px 45px rgba(8,28,36,.12)}
+    .dock a{padding:10px;border-radius:16px;text-align:center;font-weight:800;font-size:.84rem;transition:.25s}
+    .dock a:hover,.dock a.active{background:var(--ink);color:var(--mint)}
+    .section{scroll-margin-top:105px;margin:0 0 82px}
+    .section-head{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start;margin-bottom:26px}
+    .num{width:76px;height:76px;border:2px solid var(--ink);border-radius:50% 50% 18% 50%;display:grid;place-items:center;font-size:1.8rem;font-weight:900;background:var(--mint);box-shadow:7px 7px 0 var(--ink)}
+    h2{font-size:clamp(2rem,4vw,3.7rem);line-height:1.15;margin:0 0 8px;letter-spacing:-.04em}
+    .sub{color:var(--muted);margin:0}
+    .question{background:var(--ink);color:white;border-radius:var(--radius);padding:28px 32px;margin:20px 0 28px;position:relative;overflow:hidden}
+    .question:before{content:"؟";position:absolute;left:18px;top:-42px;font-size:9rem;color:rgba(183,255,106,.12);font-weight:900}
+    .question small{color:var(--mint);font-weight:900}.question p{font-size:1.05rem;margin:8px 0 0;max-width:1000px}
+    .answer-tag{display:inline-flex;align-items:center;gap:8px;color:var(--coral);font-size:.83rem;font-weight:900;margin-bottom:12px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .card{grid-column:span 4;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 7px 0 rgba(8,28,36,.05);transition:.3s}
+    .card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(8,28,36,.1)}
+    .card.wide{grid-column:span 8}.card.full{grid-column:1/-1}.card.half{grid-column:span 6}
+    .card.dark{background:var(--ink);color:white}.card.mint{background:var(--mint)}.card.coral{background:var(--coral);color:#1c1715}
+    .kicker{display:flex;align-items:center;gap:9px;font-size:.76rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .dot{width:9px;height:9px;background:var(--coral);border-radius:50%;box-shadow:0 0 0 5px rgba(255,107,87,.12)}
+    .card.dark .kicker{color:var(--mint)}
+    h3{font-size:1.35rem;line-height:1.45;margin:13px 0 10px} h4{margin:10px 0 6px;font-size:1.02rem}
+    .card p{margin:7px 0;color:var(--muted)}.dark p{color:#c9d9d7}.mint p,.coral p{color:#203238}
+    ul,ol{padding-right:20px;margin:10px 0}li{margin:6px 0}
+    .chip{display:inline-flex;margin:4px 0 4px 5px;padding:5px 10px;border-radius:999px;background:#e6ece8;font-size:.77rem;font-weight:800}.dark .chip{background:rgba(255,255,255,.1);color:white}
+    .steps{counter-reset:step;display:grid;gap:12px}
+    .step{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:14px 16px;background:white;cursor:pointer;transition:.25s}
+    .step:hover{border-color:var(--ink);transform:translateX(-4px)}
+    .step:before{counter-increment:step;content:counter(step);width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:var(--ink);color:var(--mint);font-weight:900}
+    .step b{display:block}.step small{color:var(--muted)}.step .xp{color:var(--coral);font-weight:900;font-size:.8rem}
+    .step.done{background:#efffdc}.step.done:before{content:"✓";background:#457a1d;color:white}
+    .funnel{display:flex;align-items:center;justify-content:center;gap:6px;direction:rtl;flex-wrap:wrap;margin-top:18px}
+    .funnel span{padding:10px 14px;background:#e9efeb;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);font-size:.8rem;font-weight:900;min-width:95px;text-align:center}.funnel span.hot{background:var(--coral)}
+    .metric{padding:15px;border-right:5px solid var(--cyan);background:#edf8f5;border-radius:12px;margin:8px 0}.metric b{display:block}.metric small{color:var(--muted)}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:800}.tab.active{background:var(--ink);color:var(--mint)}
+    .panel{display:none}.panel.active{display:block;animation:rise .3s ease}@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+    table{width:100%;border-collapse:separate;border-spacing:0 7px;font-size:.87rem}
+    th{text-align:right;color:var(--muted);font-size:.75rem;padding:8px}td{background:white;padding:12px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}td:first-child{border-radius:0 12px 12px 0;border-right:1px solid var(--line)}td:last-child{border-radius:12px 0 0 12px;border-left:1px solid var(--line)}
+    .card.dark table{border-collapse:separate;border-spacing:0 8px}.card.dark table th,.card.dark table td{background:white!important;color:var(--ink)!important;border-color:rgba(8,28,36,.15)!important}.card.dark table th{font-weight:900;font-size:.78rem}.card.dark table th:first-child{border-radius:0 10px 10px 0}.card.dark table th:last-child{border-radius:10px 0 0 10px}
+    .rfm-lab{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+    .controls label{display:block;margin:14px 0 5px;font-weight:900}.controls input{width:100%;accent-color:var(--coral)}
+    .result{min-height:260px;border-radius:26px;background:var(--ink);color:white;padding:28px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.result>*{position:relative;z-index:2}.result:after{content:"";position:absolute;z-index:0;width:150px;height:150px;border:35px solid rgba(79,225,207,.13);border-radius:50%;left:-105px;bottom:-105px}.result strong{font-size:2rem;color:var(--mint)}
+    .heatmap{direction:ltr;overflow:auto;padding-bottom:8px}.heat-row{display:grid;grid-template-columns:110px repeat(12,46px);gap:5px;margin:5px 0;align-items:center}.heat-row b{direction:rtl;font-size:.74rem}.cell{height:36px;border-radius:8px;display:grid;place-items:center;font-size:.67rem;font-weight:900;color:var(--ink)}.empty{background:transparent;border:1px dashed var(--line)}
+    .quarter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.quarter{background:white;border:1px solid var(--line);border-radius:20px;padding:18px}.quarter.winner{background:var(--ink);color:white;transform:translateY(-8px);box-shadow:8px 8px 0 var(--mint)}.quarter b{font-size:1.8rem;display:block}.quarter.winner b{color:var(--mint)}
+    .logic{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:stretch}.logic div{background:white;border:1px solid var(--line);border-radius:17px;padding:14px;text-align:center;font-size:.81rem}.logic b{display:block;color:var(--coral);font-size:.75rem}
+    details{border-top:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:900;list-style:none}summary:after{content:"＋";float:left;color:var(--coral)}details[open] summary:after{content:"−"}
+    .footer{background:var(--ink);color:white;border-radius:35px;padding:45px;margin-top:80px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end}.footer h2{color:var(--mint)}.footer p{color:#c6d6d4;max-width:760px}.sig{text-align:left}.sig strong{display:block;font-size:1.25rem}.sig small{color:#9eb4b1}
+    .toast{position:fixed;left:22px;bottom:22px;background:var(--ink);color:white;border-radius:18px;padding:13px 18px;box-shadow:var(--shadow);transform:translateY(130px);transition:.35s;z-index:80}.toast.show{transform:translateY(0)}
+    .print-btn{border:0;border-radius:999px;background:var(--mint);color:var(--ink);padding:10px 16px;font-weight:900;cursor:pointer}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-panel{max-width:520px}.card,.card.wide,.card.half{grid-column:1/-1}.rfm-lab{grid-template-columns:1fr}.quarter-grid{grid-template-columns:repeat(2,1fr)}.logic{grid-template-columns:1fr}.dock{grid-template-columns:repeat(4,1fr);margin-top:12px}.dock a{font-size:.7rem;padding:8px 3px}}
+    @media(max-width:560px){.shell{padding:12px}.topbar .status{display:none}.hero{border-radius:26px;padding:32px 22px}.hero-stats{grid-template-columns:1fr}.dock{top:8px;border-radius:16px}.section-head{grid-template-columns:1fr}.num{width:58px;height:58px}.question{padding:22px}.quarter-grid{grid-template-columns:1fr}.footer{grid-template-columns:1fr}.sig{text-align:right}.step{grid-template-columns:42px 1fr}.step .xp{display:none}}
+    @media print{.dock,.print-btn,.progress,.toast{display:none}.hero{min-height:auto;break-after:page}.section{break-before:page}.card{break-inside:avoid}.shell{max-width:none}.hero,.question,.dark,.result,.footer{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><a class="linkedin-mark" href="https://www.linkedin.com/in/kohansall/" target="_blank" rel="noopener" aria-label="پروفایل لینکدین محمدرضا کهنسال" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29ZM5.32 7.41a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V8.98H7.1v11.47Z"/></svg></a><span>پرونده تحلیل محصول</span></div>
+      <div class="status">نسخه پورتفولیو · ۱۴۰۵</div>
+      <button class="print-btn" onclick="window.print()">خروجی PDF</button>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">● PRODUCT ANALYSIS CASE</div>
+        <h1>از سیگنال مبهم<span>تا تصمیم قابل‌آزمایش</span></h1>
+        <p class="lead">سه مسئله واقعی مدیریت محصول در حوزه مشارکت کاربر، بخش‌بندی مشتری و تحلیل نگهداشت؛ با تمرکز بر تعریف دقیق مسئله، تشخیص مبتنی بر شواهد و تصمیم‌گیری قابل سنجش.</p>
+        <div class="author"><div><strong>محمدرضا کهنسال</strong><br><small>Product Management Case Study</small></div></div>
+      </div>
+      <aside class="hero-panel">
+        <div class="score-ring"><strong>۳ مأموریت</strong></div>
+        <div class="hero-stats"><div class="stat"><b>۱</b><small>تشخیص</small></div><div class="stat"><b>۲</b><small>بخش‌بندی</small></div><div class="stat"><b>۳</b><small>آزمایش</small></div></div>
+        <p style="text-align:center;color:#bdd0cd;font-size:.86rem">روی گام‌های هر مأموریت کلیک کنید تا مسیر تحلیل تکمیل شود.</p>
+      </aside>
+    </section>
+
+    <nav class="dock" aria-label="ناوبری اصلی">
+      <a href="#home">شروع</a><a href="#q1">سؤال ۱</a><a href="#q2">سؤال ۲</a><a href="#q3">سؤال ۳</a>
+    </nav>
+
+    <section class="section" id="q1">
+      <div class="section-head"><div class="num">۰۱</div><div><h2>افت مشارکت با Workout Tracking</h2><p class="sub">تشخیص قبل از درمان؛ راه‌حل فقط بعد از شناسایی محل و علت افت.</p></div></div>
+      <div class="question"><small>صورت سؤال</small><p>در سه ماه گذشته مشارکت کاربران با قابلیت ثبت تمرین ۲۰ درصد کاهش یافته است. چگونه علت افت را شناسایی می‌کنم و چه استراتژی سطح بالایی برای بهبود مشارکت ارائه می‌دهم؟</p></div>
+      <div class="answer-tag">◆ پاسخ مدیریتی</div>
+      <div class="grid">
+        <article class="card wide">
+          <div class="kicker"><span class="dot"></span>اصل راهنما</div>
+          <h3>اول افت را دقیق تعریف می‌کنم؛ سپس علت را محدود می‌کنم</h3>
+          <p>کاهش ۲۰ درصدی یک تغییر نسبی در نرخ مشارکت است، نه اینکه الزاماً ۲۰ درصد کاربران استفاده نمی‌کنند. ابتدا تعریف متریک، جمعیت پایه، بازه مقایسه و سلامت رویدادها را تثبیت می‌کنم.</p>
+          <div class="metric"><b>متریک اصلی پیشنهادی</b><small>نرخ کاربران واجد شرایطی که در هفت روز حداقل یک تمرین را شروع و با موفقیت ثبت می‌کنند.</small></div>
+        </article>
+        <article class="card dark">
+          <div class="kicker">هدف کسب‌وکار</div>
+          <h3>حفظ ارزش اصلی محصول</h3>
+          <p>ثبت تمرین باید کاربر را به مشاهده پیشرفت و بازگشت بعدی برساند. بنابراین موفقیت فقط کلیک نیست؛ تکمیل تمرین و تکرار رفتار است.</p>
+          <span class="chip">Activation</span><span class="chip">Habit</span><span class="chip">Retention</span>
+        </article>
+
+        <article class="card half">
+          <div class="kicker"><span class="dot"></span>مسیر تشخیص</div>
+          <h3>هفت گام از کم‌هزینه‌ترین بررسی تا اثبات علیت</h3>
+          <div class="steps" id="missionSteps">
+            <div class="step"><div><b>اعتبار داده</b><small>تعریف متریک، لاگ رویداد، تغییر Tracking و مخرج</small></div><span class="xp">+۱۰ XP</span></div>
+            <div class="step"><div><b>زمان شروع افت</b><small>تطبیق روند با Release، باگ، قیمت و کمپین</small></div><span class="xp">+۱۰ XP</span></div>
+            <div class="step"><div><b>قیف رفتار</b><small>کشف مرحله‌ای که بیشترین افت جدید را دارد</small></div><span class="xp">+۱۵ XP</span></div>
+            <div class="step"><div><b>سگمنت و کوهورت</b><small>نسخه، سیستم‌عامل، جدید و قدیمی، پلن و کانال</small></div><span class="xp">+۱۵ XP</span></div>
+            <div class="step"><div><b>شواهد کیفی</b><small>بازپخش نشست، نظرسنجی درون‌محصول و مصاحبه</small></div><span class="xp">+۲۰ XP</span></div>
+            <div class="step"><div><b>اولویت فرضیه</b><small>اثر احتمالی، شواهد، هزینه و زمان یادگیری</small></div><span class="xp">+۱۵ XP</span></div>
+            <div class="step"><div><b>آزمایش کنترل‌شده</b><small>متریک اصلی، گاردریل، MDE و تصمیم انتشار</small></div><span class="xp">+۱۵ XP</span></div>
+          </div>
+        </article>
+
+        <article class="card half">
+          <div class="kicker"><span class="dot"></span>فانل تشخیصی</div>
+          <h3>افت دقیقاً کجاست؟</h3>
+          <div class="funnel"><span>ورود به اپ</span><span>مشاهده قابلیت</span><span>شروع تمرین</span><span class="hot">ثبت حین تمرین</span><span>تکمیل</span><span>ذخیره</span><span>بازگشت</span></div>
+          <p>برای هر مرحله نرخ تبدیل، زمان تکمیل، خطا و تغییر نسبت به دوره پایه را می‌سنجم. بزرگ‌ترین تغییر منفی، محل تحقیق بعدی است؛ نه لزوماً علت نهایی.</p>
+          <details><summary>چه سگمنت‌هایی مقایسه می‌شوند؟</summary><p>کاربران جدید و قدیمی، رایگان و پریمیوم، iOS و Android، نسخه اپ، دستگاه، کشور، کانال جذب، سطح تجربه ورزشی و کاربران فعال در برابر کم‌فعال.</p></details>
+          <details><summary>تحقیق کیفی چگونه انتخاب می‌شود؟</summary><p>نمونه‌گیری هدفمند از کاربران ریزش‌کرده در مرحله بحرانی و گروهی که همان مرحله را موفق تکمیل کرده‌اند؛ تمرکز مصاحبه روی رفتار گذشته و اصطکاک واقعی.</p></details>
+        </article>
+
+        <article class="card full mint">
+          <div class="kicker">از شواهد تا تصمیم</div>
+          <h3>درخت فرضیه و اقدام سطح بالا</h3>
+          <div class="logic"><div><b>فنی</b>اگر افت روی نسخه یا دستگاه خاص متمرکز است<br><strong>رفع یا Rollback</strong></div><div><b>کشف‌پذیری</b>اگر مشاهده قابلیت افت کرده است<br><strong>بهبود ورودی و Onboarding</strong></div><div><b>اصطکاک</b>اگر شروع بالاست اما تکمیل افت کرده است<br><strong>کاهش گام و ذخیره خودکار</strong></div><div><b>ارزش</b>اگر تکمیل می‌شود اما تکرار نه<br><strong>نمایش پیشرفت و حلقه بازگشت</strong></div><div><b>بیرونی</b>اگر همه رفتارها هم‌زمان افت کرده‌اند<br><strong>بررسی فصل، قیمت و رقبا</strong></div></div>
+        </article>
+
+        <article class="card full">
+          <div class="kicker"><span class="dot"></span>Experiment Canvas</div>
+          <div class="tabs" data-tabs="exp"><button class="tab active" data-target="hyp">فرضیه</button><button class="tab" data-target="metric">متریک‌ها</button><button class="tab" data-target="decision">قانون تصمیم</button></div>
+          <div class="panel active" data-panel="hyp"><h3>نمونه فرضیه پس از مشاهده افت در مرحله تکمیل</h3><p>اگر تعداد گام‌های ثبت حین تمرین را کاهش دهیم و ذخیره خودکار اضافه کنیم، نرخ تکمیل ثبت تمرین افزایش می‌یابد؛ زیرا داده قیف و بازپخش نشست نشان می‌دهد اصطکاک اصلی در ورود دستی اطلاعات است.</p></div>
+          <div class="panel" data-panel="metric"><h3>Primary و Guardrail</h3><p><strong>متریک اصلی:</strong> نرخ تکمیل ثبت تمرین در میان شروع‌کنندگان واجد شرایط. <strong>گاردریل‌ها:</strong> نرخ خطا، زمان تکمیل، حذف تمرین، نگهداشت هفتگی و نرخ لغو اشتراک.</p></div>
+          <div class="panel" data-panel="decision"><h3>انتشار مرحله‌ای</h3><p>پیش از اجرا MDE، حجم نمونه و مدت آزمون تعیین می‌شود. در صورت افزایش معنادار عملی و آماری بدون آسیب به گاردریل‌ها، ابتدا برای ۱۰ درصد و سپس ۵۰ درصد کاربران منتشر می‌کنم. نتیجه خنثی یعنی بازبینی فرضیه یا قدرت آزمون؛ نتیجه منفی یعنی توقف و تحلیل اثر جانبی.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="q2">
+      <div class="section-head"><div class="num" style="background:var(--coral)">۰۲</div><div><h2>شناسایی مشتریان باارزش با RFM</h2><p class="sub">بخش‌بندی بر اساس رفتار تراکنشی واقعی؛ سپس اقدام و سنجش افزایش ارزش.</p></div></div>
+      <div class="question"><small>صورت سؤال</small><p>چگونه با RFM مشتریان باارزش را شناسایی می‌کنم و برای افزایش مشارکت، تکرار خرید و حفظ آن‌ها چه اقداماتی پیشنهاد می‌دهم؟</p></div>
+      <div class="answer-tag">◆ پاسخ مدیریتی</div>
+      <div class="grid">
+        <article class="card full">
+          <div class="kicker"><span class="dot"></span>تعریف و اجرای مدل</div>
+          <h3>سه متغیر، امتیازدهی نسبی، سگمنت‌های قابل اقدام</h3>
+          <div class="grid">
+            <div class="card mint"><h3>R · Recency</h3><p>تعداد روز از آخرین خرید؛ مقدار کمتر بهتر است.</p></div>
+            <div class="card coral"><h3>F · Frequency</h3><p>تعداد سفارش معتبر در پنجره تحلیل؛ مقدار بیشتر بهتر است.</p></div>
+            <div class="card dark"><h3>M · Monetary</h3><p>مبلغ خالص خرید مشتری در پلتفرم؛ مقدار بیشتر بهتر است.</p></div>
+          </div>
+          <p>پس از حذف سفارش‌های لغوشده و مرجوعی، پنجره زمانی متناسب با چرخه خرید تعیین می‌کنم. هر بعد بر اساس Quintile از ۱ تا ۵ امتیاز می‌گیرد. برای Recency فاصله کمتر امتیاز بالاتر دارد؛ برای Frequency و Monetary مقدار بیشتر امتیاز بالاتر دارد. حدود سگمنت‌ها با توزیع واقعی داده و اقتصاد کسب‌وکار اعتبارسنجی می‌شود، نه با درآمد یا طبقه اجتماعی مشتری.</p>
+        </article>
+
+        <article class="card half">
+          <div class="kicker"><span class="dot"></span>آزمایشگاه تعاملی RFM</div>
+          <h3>پروفایل مشتری را تغییر دهید</h3>
+          <div class="rfm-lab">
+            <div class="controls">
+              <label>Recency · <span id="rVal">۵</span></label><input id="r" type="range" min="1" max="5" value="5">
+              <label>Frequency · <span id="fVal">۵</span></label><input id="f" type="range" min="1" max="5" value="5">
+              <label>Monetary · <span id="mVal">۵</span></label><input id="m" type="range" min="1" max="5" value="5">
+            </div>
+            <div class="result"><small>سگمنت پیشنهادی</small><strong id="segmentName">Champion</strong><p id="segmentAction">حفظ تجربه ممتاز، پیشنهاد شخصی، Referral و دسترسی زودهنگام.</p></div>
+          </div>
+        </article>
+
+        <article class="card half dark">
+          <div class="kicker">اولویت اقدام</div>
+          <h3>ارزش فقط «امتیاز بالا» نیست؛ فرصت تغییر رفتار هم مهم است</h3>
+          <table>
+            <thead><tr><th>سگمنت</th><th>هدف</th><th>اقدام</th></tr></thead>
+            <tbody>
+              <tr><td>Champion</td><td>حفظ</td><td>پیشنهاد شخصی، Referral، مزیت ممتاز</td></tr>
+              <tr><td>Loyal</td><td>رشد</td><td>Cross-sell، اشتراک، بسته مکمل</td></tr>
+              <tr><td>Potential Loyalist</td><td>تبدیل</td><td>محرک خرید بعدی و توصیه مرتبط</td></tr>
+              <tr><td>New Customer</td><td>خرید دوم</td><td>آنبوردینگ، ارسال یا مشوق خرید دوم</td></tr>
+              <tr><td>At Risk</td><td>بازگشت</td><td>کشف علت، Win-back محدود و مرتبط</td></tr>
+              <tr><td>Cannot Lose</td><td>نجات</td><td>تماس هدفمند و رفع اصطکاک اصلی</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="card full coral">
+          <div class="kicker">چرخه یادگیری</div>
+          <h3>هر کمپین یک آزمایش افزایشی است، نه فقط ارسال پیام</h3>
+          <div class="logic"><div><b>۱ · خط پایه</b>Repeat Purchase و Retention هر سگمنت</div><div><b>۲ · کنترل</b>گروه تصادفی بدون مداخله</div><div><b>۳ · مداخله</b>پیشنهاد مخصوص همان سگمنت</div><div><b>۴ · سنجش</b>Incremental Revenue و Margin</div><div><b>۵ · حرکت</b>Segment Migration و CLV</div></div>
+          <p><strong>قانون بودجه:</strong> بودجه براساس اندازه سگمنت، احتمال پاسخ، سود افزایشی و هزینه تماس تخصیص می‌یابد. تخفیف به Champion فقط زمانی استفاده می‌شود که اثر افزایشی آن ثابت شود؛ در غیر این صورت حاشیه سود را بدون تغییر رفتار کاهش می‌دهد.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="q3">
+      <div class="section-head"><div class="num" style="background:var(--cyan)">۰۳</div><div><h2>تحلیل Cohort و نگهداشت</h2><p class="sub">تفکیک نتیجه خام از مقایسه منصفانه و تبدیل مشاهده به آزمایش.</p></div></div>
+      <div class="question"><small>صورت سؤال</small><p>کدام سه‌ماهه بالاترین نرخ متوسط نگهداشت را دارد؟ برای این روند چه فرضیه‌ای می‌سازم و چگونه آن را با معیار موفقیت و اقدام بعدی آزمایش می‌کنم؟</p></div>
+      <div class="answer-tag">◆ پاسخ مدیریتی</div>
+      <div class="grid">
+        <article class="card full">
+          <div class="kicker"><span class="dot"></span>یافته اصلی</div>
+          <h3>پاسخ خام Q1 2020 است؛ پاسخ قابل اتکا Q4 2019</h3>
+          <p>میانگین خام Q1 2020 حدود ۹۵.۲ درصد است، اما این سه‌ماهه شامل کوهورت‌های نابالغ است؛ مارس فقط ماه صفر و فوریه فقط دو نقطه دارد. ماه‌های ابتدایی ذاتاً نگهداشت بالاتری دارند، بنابراین مقایسه خام دچار سوگیری بلوغ می‌شود. با پنجره مشترک ماه صفر تا ماه سه، Q4 2019 با حدود ۹۰.۴ درصد بهترین سه‌ماهه قابل مقایسه است.</p>
+          <div class="quarter-grid"><div class="quarter"><small>Q2 2019</small><b>۸۵.۸٪</b><span>ماه ۰ تا ۳</span></div><div class="quarter"><small>Q3 2019</small><b>۸۶.۳٪</b><span>ماه ۰ تا ۳</span></div><div class="quarter winner"><small>Q4 2019</small><b>۹۰.۴٪</b><span>برنده منصفانه</span></div><div class="quarter"><small>Q1 2020</small><b>داده ناکافی</b><span>کوهورت نابالغ</span></div></div>
+        </article>
+
+        <article class="card full">
+          <div class="kicker"><span class="dot"></span>نقشه حرارتی فشرده</div>
+          <h3>سن هر کوهورت را با سن مشابه مقایسه می‌کنم</h3>
+          <div class="heatmap" id="heatmap"></div>
+          <p style="font-size:.83rem">خانه‌های خالی نبود داده را نشان می‌دهند؛ بنابراین میانگین همه خانه‌های موجود برای کوهورت‌های جدیدتر، مقایسه منصفانه‌ای تولید نمی‌کند.</p>
+        </article>
+
+        <article class="card wide">
+          <div class="kicker"><span class="dot"></span>فرضیه اولویت‌دار</div>
+          <h3>تغییر Onboarding در Q4 زمان رسیدن به ارزش را کاهش داده است</h3>
+          <p>این فرضیه فقط زمانی اولویت اول می‌شود که تاریخچه Release یا محصول نشان دهد تغییر Onboarding هم‌زمان با شروع Q4 رخ داده است. اگر چنین شواهدی وجود نداشته باشد، ابتدا کیفیت کانال جذب، Feature جدید و Seasonality را بررسی می‌کنم.</p>
+          <div class="metric"><b>شواهد لازم پیش از آزمایش</b><small>تاریخ انتشار، نرخ تکمیل Onboarding، Activation، Time to First Value و Retention به تفکیک کانال و نسخه.</small></div>
+        </article>
+        <article class="card dark">
+          <div class="kicker">ریسک استنتاج</div>
+          <h3>هم‌بستگی را علیت فرض نمی‌کنم</h3>
+          <p>مقایسه کاربران استفاده‌کننده و استفاده‌نکننده از یک Feature می‌تواند دچار Selection Bias باشد. کاربران فعال‌تر هم Feature را بیشتر استفاده می‌کنند و هم Retention بالاتری دارند.</p>
+        </article>
+
+        <article class="card full mint">
+          <div class="kicker">طرح آزمون</div>
+          <h3>A/B Test روی کاربران جدید واجد شرایط</h3>
+          <div class="logic"><div><b>جمعیت</b>کاربران جدید با شرایط ورود یکسان</div><div><b>کنترل</b>Onboarding فعلی</div><div><b>آزمایش</b>نسخه Q4 یا نسخه بهبودیافته</div><div><b>Primary</b>Retention در ماه ۱ و ماه ۳</div><div><b>Guardrail</b>Churn، خطا، زمان و شکایت</div></div>
+          <p><strong>معیار موفقیت:</strong> افزایش از پیش تعیین‌شده و معنادار عملی در Retention، همراه با فاصله اطمینان و بدون افت گاردریل‌ها. اندازه نمونه و مدت آزمون بر اساس Baseline، MDE و توان آماری تعیین می‌شود؛ نه یک زمان ثابت برای همه محصولات.</p>
+        </article>
+
+        <article class="card full">
+          <div class="kicker"><span class="dot"></span>ماتریس تصمیم</div>
+          <div class="tabs" data-tabs="cohort"><button class="tab active" data-target="positive">نتیجه مثبت</button><button class="tab" data-target="neutral">نتیجه خنثی</button><button class="tab" data-target="negative">نتیجه منفی</button></div>
+          <div class="panel active" data-panel="positive"><h3>تأیید با اثر معنادار</h3><p>انتشار مرحله‌ای، پایش Cohortهای جدید، بررسی ناهمگنی اثر در کانال‌ها و ثبت یادگیری در Playbook محصول.</p></div>
+          <div class="panel" data-panel="neutral"><h3>اثر نامشخص یا کوچک</h3><p>بررسی قدرت آزمون، نرخ مواجهه واقعی و کیفیت اجرای تغییر. اگر آزمون قدرت کافی دارد، فرضیه Onboarding تنزل می‌یابد و فرضیه کانال جذب یا Seasonality بررسی می‌شود.</p></div>
+          <div class="panel" data-panel="negative"><h3>اثر منفی یا آسیب به گاردریل</h3><p>توقف انتشار، تحلیل نقطه اصطکاک و بازگشت به نسخه کنترل. تغییر فقط در سگمنتی حفظ می‌شود که اثر مثبت و قابل توضیح داشته باشد.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div><div class="eyebrow">DECISION OVER DECORATION</div><h2>جمع‌بندی</h2><p>در هر سه مسئله، من از یک الگوی ثابت استفاده می‌کنم: تعریف دقیق متریک، اعتبارسنجی داده، محدودکردن محل مسئله، ساخت فرضیه مبتنی بر شواهد، آزمایش کنترل‌شده و تصمیم بر اساس اثر واقعی کسب‌وکار.</p></div>
+      <div class="sig"><strong>محمدرضا کهنسال</strong><small>Product Management Portfolio</small></div>
+    </footer>
+  </main>
+  <div class="toast" id="toast">گام تکمیل شد · مسیر تحلیل شما به‌روزرسانی شد</div>
+  <script>
+    const progress=document.getElementById('progress');
+    addEventListener('scroll',()=>{const h=document.documentElement;progress.style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';document.querySelectorAll('.dock a').forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(s){const r=s.getBoundingClientRect();a.classList.toggle('active',r.top<180&&r.bottom>180)}})});
+    document.querySelectorAll('.step').forEach(step=>step.addEventListener('click',()=>{step.classList.toggle('done');const toast=document.getElementById('toast');toast.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove('show'),1800)}));
+    document.querySelectorAll('[data-tabs]').forEach(group=>group.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{const card=group.closest('.card');group.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');card.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===btn.dataset.target))})));
+    const sliders=['r','f','m'].map(id=>document.getElementById(id));
+    function classify(){const [r,f,m]=sliders.map(x=>+x.value);sliders.forEach(x=>document.getElementById(x.id+'Val').textContent=x.value);let name,action;if(r>=4&&f>=4&&m>=4){name='Champion';action='حفظ تجربه ممتاز، پیشنهاد شخصی، Referral و دسترسی زودهنگام.'}else if(r>=3&&f>=4){name='Loyal';action='Cross-sell مرتبط، اشتراک و تقویت تکرار خرید.'}else if(r>=4&&f<=2){name='New Customer';action='کاهش اصطکاک خرید دوم و Onboarding رفتاری.'}else if(r<=2&&f>=4&&m>=3){name='Cannot Lose Them';action='کشف علت افت و مداخله شخصی با اولویت بالا.'}else if(r<=2&&f>=2){name='At Risk';action='کمپین بازگشت محدود، مرتبط و قابل اندازه‌گیری.'}else{name='Potential Loyalist';action='پیشنهاد مرتبط برای افزایش Frequency و تبدیل به Loyal.'}document.getElementById('segmentName').textContent=name;document.getElementById('segmentAction').textContent=action}
+    sliders.forEach(x=>x.addEventListener('input',classify));
+    const cohort=[['Apr 19',92,88,79,79,79,71,71,63,63,67,63,58],['May 19',93,85,81,81,81,81,81,81,78,78,70],['Jun 19',98,90,83,80,78,75,73,73,68,68],['Jul 19',97,83,77,77,73,70,67,50,47],['Aug 19',94,82,82,79,74,71,65,59],['Sep 19',100,91,91,83,87,87,78],['Oct 19',97,94,91,85,76,71],['Nov 19',100,85,81,69,69],['Dec 19',100,100,94,89],['Jan 20',100,88,88],['Feb 20',100,87],['Mar 20',100]];
+    const heat=document.getElementById('heatmap');
+    const head=document.createElement('div');head.className='heat-row';head.innerHTML='<b>Cohort</b>'+Array.from({length:12},(_,i)=>'<b style="text-align:center">M'+i+'</b>').join('');heat.appendChild(head);
+    cohort.forEach(row=>{const el=document.createElement('div');el.className='heat-row';let html='<b>'+row[0]+'</b>';for(let i=1;i<=12;i++){if(row[i]===undefined)html+='<span class="cell empty"></span>';else{const v=row[i],light=96-(v-45)*.68;html+='<span class="cell" style="background:hsl(158 72% '+light+'%)">'+v+'%</span>'}}el.innerHTML=html;heat.appendChild(el)});
+  </script>
+</body>
+</html>
